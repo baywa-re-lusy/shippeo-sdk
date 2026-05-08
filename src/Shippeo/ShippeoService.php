@@ -27,6 +27,8 @@ class ShippeoService
         protected StreamFactoryInterface $streamFactory,
         protected string $shippeoUsername,
         protected string $shippeoPassword,
+        protected string $shippeoAgency,
+        protected string $senderName,
         protected ShippeoHydrator $hydrator,
         protected LoggerInterface $shippeoPushLogger,
         protected \DateTime $currentDateTime,
@@ -123,7 +125,7 @@ class ShippeoService
             ->setContainer((new Shipment\Container())->setReference($container->getId()))
             ->setTransportServiceBuyer([
                 (new Shipment\TransportServiceBuyer())
-                    ->setIdentifier('baywa_ocean')
+                    ->setIdentifier($this->shippeoAgency)
                     ->setQualifier('ZZ')
             ])
             ->setCarrier([
@@ -170,7 +172,7 @@ class ShippeoService
         $shippeoEntity
             ->setMeta(
                 (new Meta())
-                    ->setSenderID('BayWa r.e. Solar Systems sàrl')
+                    ->setSenderID($this->senderName)
                     ->setDuplicateReceiverId('shippeo')
                     ->setMessageDate($this->currentDateTime)
                     ->setMessageReference($container->getId())
