@@ -12,7 +12,7 @@ class MetaHydrator implements HydratorInterface
 
     public function __construct()
     {
-        $this->hydrator = new ClassMethodsHydrator();
+        $this->hydrator = new ClassMethodsHydrator(false);
 
         $this->hydrator->addStrategy('messageDate', new DateTimeFormatterStrategy(\DateTimeInterface::RFC3339));
     }
