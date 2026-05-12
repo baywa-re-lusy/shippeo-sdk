@@ -9,8 +9,8 @@ class ShippeoEventEntity
     protected string $containerId;
     protected DateTimeImmutable $timestamp;
     protected ShippeoEventType $type;
-    protected DateTimeImmutable $eta;
-    protected DateTimeImmutable $expectedReceiptDate;
+    protected ?DateTimeImmutable $eta = null;
+    protected ?DateTimeImmutable $expectedReceiptDate = null;
     protected DateTimeImmutable $created;
 
     public function getContainerId(): string
@@ -46,7 +46,7 @@ class ShippeoEventEntity
         return $this;
     }
 
-    public function getEta(): DateTimeImmutable
+    public function getEta(): ?DateTimeImmutable
     {
         return $this->eta;
     }
@@ -57,7 +57,7 @@ class ShippeoEventEntity
         return $this;
     }
 
-    public function getExpectedReceiptDate(): DateTimeImmutable
+    public function getExpectedReceiptDate(): ?DateTimeImmutable
     {
         return $this->expectedReceiptDate;
     }
