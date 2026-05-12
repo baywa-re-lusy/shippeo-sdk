@@ -32,7 +32,7 @@ enum ShippeoEventType: string
     case ContainerLeftFullThePortOfDeliveryEstimated        = 'container_left_full_the_port_of_delivery_estimated';
     case ContainerReturnsBackEmptyAtThePortOfDelivery       = 'container_returns_back_empty_at_the_port_of_delivery';
     case ContainerReturnsBackEmptyAtThePortOfDeliveryEstimated
-    = 'container_returns_back_empty_at_the_port_of_delivery_estimated';
+        = 'container_returns_back_empty_at_the_port_of_delivery_estimated';
 
     private const SHIPPEO_EVENT_MAP = [
         'ETA_EVENT'                                                => self::EtaUpdate,
@@ -70,5 +70,10 @@ enum ShippeoEventType: string
     {
         return self::SHIPPEO_EVENT_MAP[$shippeoEvent]
             ?? throw new \ValueError("'$shippeoEvent' is not a valid Shippeo event.");
+    }
+
+    public static function tryFromShippeoEvent(string $shippeoEvent): ?self
+    {
+        return self::SHIPPEO_EVENT_MAP[$shippeoEvent] ?? null;
     }
 }
