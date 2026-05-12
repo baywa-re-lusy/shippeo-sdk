@@ -4,6 +4,7 @@ namespace BayWaReLusy\Shippeo;
 
 use BayWaReLusy\Shippeo\ShippeoEntity\Meta;
 use BayWaReLusy\Shippeo\ShippeoEntity\Shipment;
+use Psr\Clock\ClockInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Http\Client\ClientInterface as HttpClient;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -31,7 +32,7 @@ class ShippeoService
         protected string $senderName,
         protected ShippeoHydrator $hydrator,
         protected LoggerInterface $shippeoPushLogger,
-        protected \DateTime $currentDateTime,
+        protected ClockInterface $clock,
     ) {
     }
 
@@ -174,7 +175,7 @@ class ShippeoService
                 (new Meta())
                     ->setSenderID($this->senderName)
                     ->setDuplicateReceiverId('shippeo')
-                    ->setMessageDate($this->currentDateTime)
+                    ->setMessageDate($this->clock->now())
                     ->setMessageReference($container->getId())
                     ->setMessageType('GTF511')
                     ->setMessageFunction(

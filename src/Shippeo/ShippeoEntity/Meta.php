@@ -6,7 +6,7 @@ class Meta
 {
     protected string $senderID;
     protected string $duplicateReceiverId;
-    protected \DateTime $messageDate;
+    protected \DateTimeImmutable $messageDate;
     protected string $messageReference;
     protected string $messageType;
     protected string $messageFunction;
@@ -48,18 +48,18 @@ class Meta
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
-    public function getMessageDate(): \DateTime
+    public function getMessageDate(): \DateTimeImmutable
     {
         return $this->messageDate;
     }
 
     /**
-     * @param \DateTime $messageDate
+     * @param \DateTimeImmutable $messageDate
      * @return Meta
      */
-    public function setMessageDate(\DateTime $messageDate): Meta
+    public function setMessageDate(\DateTimeImmutable $messageDate): Meta
     {
         $this->messageDate = $messageDate;
         return $this;

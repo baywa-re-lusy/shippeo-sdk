@@ -53,7 +53,7 @@ class ShippeoHydratorTest extends TestCase
         $meta = (new Meta())
             ->setSenderID('Sender ID')
             ->setDuplicateReceiverId('shippeo')
-            ->setMessageDate(new \DateTime('2021-03-29T13:53:36+00:00'))
+            ->setMessageDate(new \DateTimeImmutable('2021-03-29T13:53:36+00:00'))
             ->setMessageReference('ABCD1234567')
             ->setMessageType('GTF511')
             ->setMessageFunction('9');

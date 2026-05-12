@@ -11,6 +11,7 @@ use BayWaReLusy\Shippeo\ContainerInterface;
 use BayWaReLusy\Shippeo\ShippeoEntity;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Clock\ClockInterface;
 use Psr\Http\Client\ClientInterface as HttpClient;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -27,7 +28,7 @@ class ShippeoServiceTest extends TestCase
     private StreamFactoryInterface $streamFactory;
     private ShippeoHydrator $hydrator;
     private LoggerInterface $logger;
-    private \DateTime $now;
+    private ClockInterface $clock;
 
     protected function setUp(): void
     {
@@ -36,7 +37,7 @@ class ShippeoServiceTest extends TestCase
         $this->streamFactory  = $this->createMock(StreamFactoryInterface::class);
         $this->hydrator       = $this->createMock(ShippeoHydrator::class);
         $this->logger         = $this->createMock(LoggerInterface::class);
-        $this->now            = new \DateTime();
+        $this->clock          = $this->createMock(ClockInterface::class);
     }
 
     private function createService(): ShippeoService
@@ -51,7 +52,7 @@ class ShippeoServiceTest extends TestCase
             'SENDER',
             $this->hydrator,
             $this->logger,
-            $this->now
+            $this->clock
         );
     }
 
