@@ -84,10 +84,10 @@ class ShippeoService
     /**
      * Parse the Shippeo Webhook payload into a Shippeo event entity.
      * @param string $jsonBody
-     * @return ShippeoEventEntity
+     * @return ShippeoEventEntity|null The parsed Shippeo event or null if the event type is unknown.
      * @throws ShippeoException
      */
-    public function parseShippeoEventPayload(string $jsonBody): ShippeoEventEntity
+    public function parseShippeoEventPayload(string $jsonBody): ?ShippeoEventEntity
     {
         $data = json_decode($jsonBody, true);
 
@@ -102,25 +102,29 @@ class ShippeoService
             throw new ShippeoException('Invalid event data.');
         }
 
-        if (!$date = DateTimeImmutable::createFromFormat('Y-m-d\TH:i:sO', $data['situation']['date'])) {
-            throw new ShippeoException('Invalid Timestamp');
+        if ($type = ShippeoEventType::tryFromShippeoEvent($data['situation']['event'])) {
+            if (!$date = DateTimeImmutable::createFromFormat('Y-m-d\TH:i:sO', $data['situation']['date'])) {
+                throw new ShippeoException('Invalid Timestamp');
+            }
+
+            $event = new ShippeoEventEntity();
+            $event
+                ->setContainerId($data['order']['reference'])
+                ->setCreated($this->clock->now())
+                ->setTimestamp($date->setTimezone(new DateTimeZone('UTC')))
+                ->setType($type);
+
+            if (
+                array_key_exists('eta', $data['order']) &&
+                $eta = DateTimeImmutable::createFromFormat('Y-m-d\TH:i:sO', $data['order']['eta'])
+            ) {
+                $event->setEta($eta->setTimezone(new DateTimeZone('UTC')));
+            }
+
+            return $event;
         }
 
-        $event = new ShippeoEventEntity();
-        $event
-            ->setContainerId($data['order']['reference'])
-            ->setCreated($this->clock->now())
-            ->setTimestamp($date->setTimezone(new DateTimeZone('UTC')))
-            ->setType(ShippeoEventType::fromShippeoEvent($data['situation']['event']));
-
-        if (
-            array_key_exists('eta', $data['order']) &&
-            $eta = DateTimeImmutable::createFromFormat('Y-m-d\TH:i:sO', $data['order']['eta'])
-        ) {
-            $event->setEta($eta->setTimezone(new DateTimeZone('UTC')));
-        }
-
-        return $event;
+        return null;
     }
 
     /**
