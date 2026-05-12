@@ -9,6 +9,7 @@ use BayWaReLusy\Shippeo\ShippeoException;
 use BayWaReLusy\Shippeo\ShippeoHydrator;
 use BayWaReLusy\Shippeo\ContainerInterface;
 use BayWaReLusy\Shippeo\ShippeoEntity;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface as HttpClient;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -18,6 +19,7 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Log\LoggerInterface;
 
+#[CoversClass(ShippeoService::class)]
 class ShippeoServiceTest extends TestCase
 {
     private HttpClient $httpClient;

@@ -1,0 +1,105 @@
+{
+  "meta": {
+    "senderID": "Sender ID",
+    "duplicateReceiverId": "shippeo",
+    "messageDate": "2021-03-29T13:53:36+00:00",
+    "messageReference": "ABCD1234567",
+    "messageType": "GTF511",
+    "messageFunction": "9"
+  },
+  "shipment": {
+    "technicalReference": "ABCD1234567",
+    "reference": "ABCD1234567",
+    "type": "630",
+    "transportMode": "maritime",
+    "serviceLine": "EGLV",
+    "container": {
+      "reference": "ABCD1234567"
+    },
+    "transportServiceBuyer": [
+      {
+        "identifier": "agency_id",
+        "qualifier": "ZZ"
+      }
+    ],
+    "carrier": [
+      {
+        "identifier": "EGLV",
+        "qualifier": "ZZ"
+      }
+    ],
+    "billOfLadingReferences": [
+      {
+        "reference": "OOLU0123456789",
+        "qualifier": "MBL"
+      }
+    ],
+    "nextShipments": null,
+    "transportMean": [],
+    "orders": [
+      {
+        "goodsDescription": "General goods",
+        "references": [
+          {
+            "qualifier": "DQ",
+            "reference": "ABCD1234567"
+          }
+        ],
+        "packing": [],
+        "returnablePackaging": [],
+        "pickUp": {
+          "identifications": [
+            {
+              "identifier": "CNSHA",
+              "qualifier": "UNLOCODE"
+            }
+          ],
+          "name": null,
+          "address1": null,
+          "address2": null,
+          "country": null,
+          "postalCode": null,
+          "city": null,
+          "latitude": null,
+          "longitude": null,
+          "ownership": null,
+          "activityTime": null,
+          "instructions": null,
+          "appointment": false,
+          "dates": []
+        },
+        "consignee": {
+          "identifications": [
+            {
+              "identifier": "BEANR",
+              "qualifier": "UNLOCODE"
+            }
+          ],
+          "name": null,
+          "address1": null,
+          "address2": null,
+          "country": null,
+          "postalCode": null,
+          "city": null,
+          "latitude": null,
+          "longitude": null,
+          "ownership": null,
+          "activityTime": null,
+          "instructions": null,
+          "appointment": false,
+          "dates": []
+        },
+        "clientIdentification": null,
+        "notificationContacts": [],
+        "tags": [],
+        "quantity": null,
+        "amounts": [],
+        "handlingUnits": [],
+        "attributes": [],
+        "dangerousGoods": [],
+        "charges": null
+      }
+    ],
+    "isDangerousGoods": false
+  }
+}
