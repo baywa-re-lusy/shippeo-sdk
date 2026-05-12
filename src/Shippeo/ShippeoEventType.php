@@ -34,7 +34,11 @@ enum ShippeoEventType: string
     case ContainerReturnsBackEmptyAtThePortOfDeliveryEstimated
         = 'container_returns_back_empty_at_the_port_of_delivery_estimated';
 
+    // Custom event to trace updates of expected receipt date
+    case expectedReceiptDateUpdated = 'expected_receipt_date_updated';
+
     private const SHIPPEO_EVENT_MAP = [
+        'EVENT_EXPECTED_RECEIPT_DATE_UPDATED'                      => self::expectedReceiptDateUpdated,
         'ETA_EVENT'                                                => self::EtaUpdate,
         'ETA_EVENT_EXTERNAL'                                       => self::ExternalEtaUpdate,
         'CONTAINER_EMPTY_GATE_OUT_AT_LOADING_SITE'                 => self::ContainerLeftEmptyPortOfLoading,
