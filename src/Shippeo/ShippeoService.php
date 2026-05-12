@@ -87,7 +87,7 @@ class ShippeoService
      * @return ShippeoEventEntity
      * @throws ShippeoException
      */
-    public function parseShippeoEvent(string $jsonBody): ShippeoEventEntity
+    public function parseShippeoEventPayload(string $jsonBody): ShippeoEventEntity
     {
         $data = json_decode($jsonBody, true);
 
