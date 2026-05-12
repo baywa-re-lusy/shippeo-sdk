@@ -40,7 +40,8 @@ enum ShippeoEventType: string
         'CONTAINER_EMPTY_GATE_OUT_AT_LOADING_SITE'                 => self::ContainerLeftEmptyPortOfLoading,
         'ORDER_CONTAINER_EMPTY_GATE_OUT_AT_LOADING_SITE_ESTIMATED' => self::ContainerLeftEmptyPortOfLoadingEstimated,
         'CONTAINER_FULL_GATE_IN_AT_LOADING_SITE'                   => self::ContainerEntersFullAtThePortOfLoading,
-        'ORDER_CONTAINER_FULL_GATE_IN_AT_LOADING_SITE_ESTIMATED'   => self::ContainerEntersFullAtThePortOfLoadingEstimated,
+        'ORDER_CONTAINER_FULL_GATE_IN_AT_LOADING_SITE_ESTIMATED'
+            => self::ContainerEntersFullAtThePortOfLoadingEstimated,
         'CONTAINER_LOADED'                                         => self::ContainerLoadedOnTheBoat,
         'ORDER_CONTAINER_LOADED_ESTIMATED'                         => self::ContainerLoadedOnTheBoatEstimated,
         'CONTAINER_LEFT_LOADING_SITE'                              => self::VesselLeftThePortOfLoading,
@@ -59,8 +60,10 @@ enum ShippeoEventType: string
         'ORDER_CONTAINER_UNLOADED_ESTIMATED'                       => self::ContainerUnloadedFromTheVesselEstimated,
         'CONTAINER_FULL_GATE_OUT_AT_DELIVERY_SITE'                 => self::ContainerLeftFullThePortOfDelivery,
         'ORDER_CONTAINER_FULL_GATE_OUT_AT_DELIVERY_SITE_ESTIMATED' => self::ContainerLeftFullThePortOfDeliveryEstimated,
-        'CONTAINER_EMPTY_GATE_IN_AT_DELIVERY_SITE'                 => self::ContainerReturnsBackEmptyAtThePortOfDelivery,
-        'ORDER_CONTAINER_EMPTY_GATE_IN_AT_DELIVERY_SITE_ESTIMATED' => self::ContainerReturnsBackEmptyAtThePortOfDeliveryEstimated,
+        'CONTAINER_EMPTY_GATE_IN_AT_DELIVERY_SITE'
+            => self::ContainerReturnsBackEmptyAtThePortOfDelivery,
+        'ORDER_CONTAINER_EMPTY_GATE_IN_AT_DELIVERY_SITE_ESTIMATED'
+            => self::ContainerReturnsBackEmptyAtThePortOfDeliveryEstimated,
     ];
 
     public static function fromShippeoEvent(string $shippeoEvent): self
