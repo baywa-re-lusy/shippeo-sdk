@@ -21,7 +21,7 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Log\LoggerInterface;
 
 #[CoversClass(ShippeoService::class)]
-class ShippeoServiceTest extends TestCase
+class PushContainerTest extends TestCase
 {
     private HttpClient $httpClient;
     private RequestFactoryInterface $requestFactory;
