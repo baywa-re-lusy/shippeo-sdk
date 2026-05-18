@@ -78,14 +78,16 @@ class ShippeoHydratorTest extends TestCase
             ->setQualifier('UNLOCODE');
 
         $pickUp = (new PickUp())
-            ->setIdentifications([$pickUpIdentification]);
+            ->setIdentifications([$pickUpIdentification])
+            ->setDates([(new Order\Address\Date())->setQualifier('398')]);
 
         $consigneeIdentification = (new Identification())
             ->setIdentifier('BEANR')
             ->setQualifier('UNLOCODE');
 
         $consignee = (new Consignee())
-            ->setIdentifications([$consigneeIdentification]);
+            ->setIdentifications([$consigneeIdentification])
+            ->setDates([(new Order\Address\Date())->setQualifier('2')]);
 
         $reference = (new Reference())
             ->setQualifier('DQ')
@@ -479,11 +481,19 @@ class ShippeoHydratorTest extends TestCase
     }
 
     #[Test]
-    public function extractProducesPickUpDatesAsEmptyArray(): void
+    public function extractProducesPickUpDates(): void
     {
         $result = $this->hydrator->extract($this->buildEntity());
 
-        $this->assertSame([], $result['shipment']['orders'][0]['pickUp']['dates']);
+        $this->assertSame(
+            [
+                [
+                    'qualifier' => '398',
+                    'dateTime'  => null,
+                ]
+            ],
+            $result['shipment']['orders'][0]['pickUp']['dates']
+        );
     }
 
     // -------------------------------------------------------------------------
@@ -518,6 +528,22 @@ class ShippeoHydratorTest extends TestCase
                      'latitude', 'longitude', 'ownership', 'activityTime', 'instructions'] as $field) {
             $this->assertNull($consignee[$field], "Expected null for consignee.$field");
         }
+    }
+
+    #[Test]
+    public function extractProducesConsigneeDates(): void
+    {
+        $result = $this->hydrator->extract($this->buildEntity());
+
+        $this->assertSame(
+            [
+                [
+                    'qualifier' => '2',
+                    'dateTime'  => null,
+                ]
+            ],
+            $result['shipment']['orders'][0]['consignee']['dates']
+        );
     }
 
     // -------------------------------------------------------------------------

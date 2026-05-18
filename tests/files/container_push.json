@@ -66,7 +66,12 @@
           "activityTime": null,
           "instructions": null,
           "appointment": false,
-          "dates": []
+          "dates": [
+            {
+              "qualifier": "398",
+              "dateTime": null
+            }
+          ]
         },
         "consignee": {
           "identifications": [
@@ -87,7 +92,12 @@
           "activityTime": null,
           "instructions": null,
           "appointment": false,
-          "dates": []
+          "dates": [
+            {
+              "qualifier": "2",
+              "dateTime": null
+            }
+          ]
         },
         "clientIdentification": null,
         "notificationContacts": [],
