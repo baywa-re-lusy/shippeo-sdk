@@ -2,10 +2,12 @@
 
 namespace BayWaReLusy\Shippeo\ShippeoEntity\Shipment\Order\Address;
 
+use DateTime;
+
 class Date
 {
     protected string $qualifier;
-    protected \DateTime $dateTime;
+    protected ?DateTime $dateTime = null;
 
     /**
      * @return string
@@ -26,18 +28,18 @@ class Date
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime|null
      */
-    public function getDateTime(): \DateTime
+    public function getDateTime(): ?DateTime
     {
         return $this->dateTime;
     }
 
     /**
-     * @param \DateTime $dateTime
+     * @param ?DateTime $dateTime
      * @return Date
      */
-    public function setDateTime(\DateTime $dateTime): Date
+    public function setDateTime(?DateTime $dateTime): Date
     {
         $this->dateTime = $dateTime;
         return $this;

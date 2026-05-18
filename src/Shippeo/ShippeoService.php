@@ -199,7 +199,8 @@ class ShippeoService
                 (new Shipment\Order\Address\Identification())
                     ->setQualifier('UNLOCODE')
                     ->setIdentifier($container->getUnLoCodeLoadingPort())
-            ]);
+            ])
+            ->setDates([(new Shipment\Order\Address\Date())->setQualifier('398')]);
 
         $consignee = new Shipment\Order\Consignee();
         $consignee
@@ -207,7 +208,8 @@ class ShippeoService
                 (new Shipment\Order\Address\Identification())
                     ->setQualifier('UNLOCODE')
                     ->setIdentifier($container->getUnLoCodeDestinationPort())
-            ]);
+            ])
+            ->setDates([(new Shipment\Order\Address\Date())->setQualifier('2')]);
 
         $order = new Shipment\Order();
         $order
