@@ -298,4 +298,88 @@ class ParseShippeoEventPayloadTest extends TestCase
         $this->assertNotNull($event);
         $this->assertSame($expectedType, $event->getType());
     }
+
+    // -------------------------------------------------------------------------
+    // Vessel name extraction
+    // -------------------------------------------------------------------------
+
+    private function makePayloadWithResources(array $resources): string
+    {
+        return json_encode([
+            'order'     => ['reference' => 'DFSU7039395'],
+            'situation' => ['event' => 'CONTAINER_LOADED', 'date' => '2022-06-02T10:19:39+0000'],
+            'resources' => $resources,
+        ]);
+    }
+
+    #[Test]
+    public function parsesVesselNameWhenPresentWithCorrectQualifiers(): void
+    {
+        $payload = $this->makePayloadWithResources([
+            [
+                'qualifier'   => 'vessel',
+                'identifiers' => [
+                    ['qualifier' => 'LABEL', 'value' => 'MSC MAYA'],
+                ],
+            ],
+        ]);
+
+        $event = $this->service->parseShippeoEventPayload($payload);
+        $this->assertSame('MSC MAYA', $event->getVesselName());
+    }
+
+    #[Test]
+    public function vesselNameIsNullWhenResourcesKeyAbsent(): void
+    {
+        $event = $this->service->parseShippeoEventPayload(self::PAYLOAD_WITHOUT_ETA);
+        $this->assertNull($event->getVesselName());
+    }
+
+    #[Test]
+    public function vesselNameIsNullWhenResourceQualifierIsNotVessel(): void
+    {
+        $payload = $this->makePayloadWithResources([
+            [
+                'qualifier'   => 'truck',
+                'identifiers' => [
+                    ['qualifier' => 'LABEL', 'value' => 'MSC MAYA'],
+                ],
+            ],
+        ]);
+
+        $event = $this->service->parseShippeoEventPayload($payload);
+        $this->assertNull($event->getVesselName());
+    }
+
+    #[Test]
+    public function vesselNameIsNullWhenIdentifierQualifierIsNotLabel(): void
+    {
+        $payload = $this->makePayloadWithResources([
+            [
+                'qualifier'   => 'vessel',
+                'identifiers' => [
+                    ['qualifier' => 'IMO', 'value' => 'MSC MAYA'],
+                ],
+            ],
+        ]);
+
+        $event = $this->service->parseShippeoEventPayload($payload);
+        $this->assertNull($event->getVesselName());
+    }
+
+    #[Test]
+    public function vesselNameIsNullWhenIdentifierValueIsEmpty(): void
+    {
+        $payload = $this->makePayloadWithResources([
+            [
+                'qualifier'   => 'vessel',
+                'identifiers' => [
+                    ['qualifier' => 'LABEL', 'value' => ''],
+                ],
+            ],
+        ]);
+
+        $event = $this->service->parseShippeoEventPayload($payload);
+        $this->assertNull($event->getVesselName());
+    }
 }
