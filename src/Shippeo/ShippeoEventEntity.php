@@ -12,6 +12,7 @@ class ShippeoEventEntity
     protected ?DateTimeImmutable $eta = null;
     protected ?DateTimeImmutable $expectedReceiptDate = null;
     protected DateTimeImmutable $created;
+    protected ?string $vesselName = null;
 
     public function getContainerId(): string
     {
@@ -76,6 +77,17 @@ class ShippeoEventEntity
     public function setCreated(DateTimeImmutable $created): ShippeoEventEntity
     {
         $this->created = $created;
+        return $this;
+    }
+
+    public function getVesselName(): ?string
+    {
+        return $this->vesselName;
+    }
+
+    public function setVesselName(?string $vesselName): ShippeoEventEntity
+    {
+        $this->vesselName = $vesselName;
         return $this;
     }
 }

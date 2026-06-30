@@ -121,6 +121,11 @@ class ShippeoService
                 $event->setEta($eta->setTimezone(new DateTimeZone('UTC')));
             }
 
+            // Check if the event contains a vessel name
+            if ($vesselName = $this->extractVesselName($data)) {
+                $event->setVesselName($vesselName);
+            }
+
             return $event;
         }
 
@@ -267,5 +272,30 @@ class ShippeoService
         }
 
         return $errorMessage;
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return string|null
+     */
+    protected function extractVesselName(array $data): ?string
+    {
+        if (!isset($data['resources']) || !is_array($data['resources'])) {
+            return null;
+        }
+
+        foreach ($data['resources'] as $resource) {
+            if (!is_array($resource) || ($resource['qualifier'] ?? null) !== 'vessel') {
+                continue;
+            }
+
+            foreach ($resource['identifiers'] ?? [] as $identifier) {
+                if (($identifier['qualifier'] ?? null) === 'LABEL' && !empty($identifier['value'])) {
+                    return $identifier['value'];
+                }
+            }
+        }
+
+        return null;
     }
 }
