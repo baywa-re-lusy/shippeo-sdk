@@ -47,7 +47,7 @@ class ShippeoService
         try {
             $this->login();
             if (!$this->isContainerEligible($container)) {
-                throw new \RuntimeException("The container is not elidible for pushing.");
+                throw new \RuntimeException("The container is not eligible for pushing.");
             }
             $shippeoContainer = $this->buildContainer($container);
 
