@@ -174,6 +174,20 @@ class ShippeoService
      */
     protected function buildContainer(ContainerInterface $container): ShippeoEntity
     {
+        if (
+            !$container->getId()
+            ||
+            !$container->getUnLoCodeLoadingPort()
+            ||
+            !$container->getUnLoCodeDestinationPort()
+            ||
+            !$container->getOceanCarrierCode()
+            ||
+            !$container->getMasterBillOfLadingReference()
+        ) {
+            throw new \RuntimeException("The container is not eligible for building.");
+        }
+
         $shipment = new Shipment();
         $shipment
             ->setType('630')
