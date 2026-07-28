@@ -46,6 +46,9 @@ class ShippeoService
     {
         try {
             $this->login();
+            if (!$this->isContainerEligible($container)) {
+                throw new \RuntimeException("The container is not elidible for pushing.");
+            }
             $shippeoContainer = $this->buildContainer($container);
 
             $body = (string)json_encode(
@@ -297,5 +300,28 @@ class ShippeoService
         }
 
         return null;
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @return bool
+     */
+    public function isContainerEligible(ContainerInterface $container): bool
+    {
+        // All field of the interface should be set for the container to be eligible for pushing
+        if (
+            $container->getId()
+            &&
+            $container->getUnLoCodeLoadingPort()
+            &&
+            $container->getUnLoCodeDestinationPort()
+            &&
+            $container->getOceanCarrierCode()
+            &&
+            $container->getMasterBillOfLadingReference()
+        ) {
+            return true;
+        }
+        return false;
     }
 }
