@@ -46,9 +46,6 @@ class ShippeoService
     {
         try {
             $this->login();
-            if (!$this->isContainerEligible($container)) {
-                throw new \RuntimeException("The container is not eligible for pushing.");
-            }
             $shippeoContainer = $this->buildContainer($container);
 
             $body = (string)json_encode(
@@ -177,6 +174,9 @@ class ShippeoService
      */
     protected function buildContainer(ContainerInterface $container): ShippeoEntity
     {
+        if (!$this->isContainerEligible($container)) {
+            throw new \RuntimeException("The container is not eligible for building.");
+        }
         $shipment = new Shipment();
         $shipment
             ->setType('630')
@@ -308,7 +308,7 @@ class ShippeoService
      */
     public function isContainerEligible(ContainerInterface $container): bool
     {
-        // All field of the interface should be set for the container to be eligible for pushing
+        // All field of the interface should be set for the container to be eligible for building
         if (
             $container->getId()
             &&
