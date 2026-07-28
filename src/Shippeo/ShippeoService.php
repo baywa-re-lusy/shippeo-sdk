@@ -174,9 +174,20 @@ class ShippeoService
      */
     protected function buildContainer(ContainerInterface $container): ShippeoEntity
     {
-        if (!$this->isContainerEligible($container)) {
+        if (
+            !$container->getId()
+            ||
+            !$container->getUnLoCodeLoadingPort()
+            ||
+            !$container->getUnLoCodeDestinationPort()
+            ||
+            !$container->getOceanCarrierCode()
+            ||
+            !$container->getMasterBillOfLadingReference()
+        ) {
             throw new \RuntimeException("The container is not eligible for building.");
         }
+
         $shipment = new Shipment();
         $shipment
             ->setType('630')
@@ -300,28 +311,5 @@ class ShippeoService
         }
 
         return null;
-    }
-
-    /**
-     * @param ContainerInterface $container
-     * @return bool
-     */
-    public function isContainerEligible(ContainerInterface $container): bool
-    {
-        // All field of the interface should be set for the container to be eligible for building
-        if (
-            $container->getId()
-            &&
-            $container->getUnLoCodeLoadingPort()
-            &&
-            $container->getUnLoCodeDestinationPort()
-            &&
-            $container->getOceanCarrierCode()
-            &&
-            $container->getMasterBillOfLadingReference()
-        ) {
-            return true;
-        }
-        return false;
     }
 }
